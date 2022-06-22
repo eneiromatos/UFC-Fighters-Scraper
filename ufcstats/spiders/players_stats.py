@@ -70,11 +70,11 @@ class PlayersStatsSpider(scrapy.Spider):
                 item.add_value("accuracy", card.css("text::text").get())
                 item.add_value(
                     "sig_strikes_landed",
-                    card.css(".c-overlap__stats-value::text").getall()[0],
+                    card.css(".c-overlap__stats-value:nth-child(2)::text").get(),
                 )
                 item.add_value(
                     "sig_strikes_attempted",
-                    card.css(".c-overlap__stats-value::text").getall()[1],
+                    card.css(".c-overlap__stats-value:nth-child(4)::text").get(),
                 )
 
         item.add_value(
@@ -96,20 +96,14 @@ class PlayersStatsSpider(scrapy.Spider):
         for card in accuracy_card:
             if "grappling" in card.css("h2::text").get().casefold():
                 item.add_value("accuracy", card.css("text::text").get())
-                try:
-                    item.add_value(
-                        "takedowns_landed",
-                        card.css(".c-overlap__stats-value::text").getall()[0],
-                    )
-                except IndexError:
-                    pass
-                try:
-                    item.add_value(
-                        "takedowns_attempted",
-                        card.css(".c-overlap__stats-value::text").getall()[1],
-                    )
-                except IndexError:
-                    pass
+                item.add_value(
+                    "takedowns_landed",
+                    card.css(".c-overlap__stats-value:nth-child(2)::text").get(),
+                )
+                item.add_value(
+                    "takedowns_attempted",
+                    card.css(".c-overlap__stats-value:nth-child(4)::text").get(),
+                )
 
         item.add_value(
             "takedowns_avg_per_15_min",
