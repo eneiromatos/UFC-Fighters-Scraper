@@ -57,18 +57,25 @@ class PlayersStatsSpider(scrapy.Spider):
             "takedown_defense", stats[5].css('div[class*="number"]::text').get()
         )
         item.add_value("strinking_stats", self.parse_striking_stats(response))
+        item.add_value("grappling_stats", self.parse_grappling_stats(response))
         yield item.load_item()
 
     def parse_striking_stats(self, response):
         item = items.StrikingStatsItemLoader(selector=response)
         stats = response.css('div[class*="c-stat-compare__group"]')
-        stats_2 = response.css(".c-overlap__stats-value::text").getall()
-        accuracy = response.css(".c-overlap__chart text::text").getall()
+        accuracy_card = response.css(".c-overlap-athlete-detail__card")
 
-        if len(accuracy) > 0:
-            item.add_value("accuracy", accuracy[0])
-            item.add_value("sig_strikes_landed", stats_2[0])
-            item.add_value("sig_strikes_attempted", stats_2[1])
+        for card in accuracy_card:
+            if "striking" in card.css("h2::text").get().casefold():
+                item.add_value("accuracy", card.css("text::text").get())
+                item.add_value(
+                    "sig_strikes_landed",
+                    card.css(".c-overlap__stats-value::text").getall()[0],
+                )
+                item.add_value(
+                    "sig_strikes_attempted",
+                    card.css(".c-overlap__stats-value::text").getall()[1],
+                )
 
         item.add_value(
             "sig_strikes_landed_per_min",
@@ -82,7 +89,38 @@ class PlayersStatsSpider(scrapy.Spider):
         yield item.load_item()
 
     def parse_grappling_stats(self, response):
-        pass
+        item = items.GrapplingStatsItemLoader(selector=response)
+        stats = response.css('div[class*="c-stat-compare__group"]')
+        accuracy_card = response.css(".c-overlap-athlete-detail__card")
+
+        for card in accuracy_card:
+            if "grappling" in card.css("h2::text").get().casefold():
+                item.add_value("accuracy", card.css("text::text").get())
+                try:
+                    item.add_value(
+                        "takedowns_landed",
+                        card.css(".c-overlap__stats-value::text").getall()[0],
+                    )
+                except IndexError:
+                    pass
+                try:
+                    item.add_value(
+                        "takedowns_attempted",
+                        card.css(".c-overlap__stats-value::text").getall()[1],
+                    )
+                except IndexError:
+                    pass
+
+        item.add_value(
+            "takedowns_avg_per_15_min",
+            stats[2].css('div[class*="number"]::text').get(),
+        )
+        item.add_value(
+            "submission_avg_per_15_min",
+            stats[3].css('div[class*="number"]::text').get(),
+        )
+
+        yield item.load_item()
 
     def parse_str_possition(self, response):
         pass

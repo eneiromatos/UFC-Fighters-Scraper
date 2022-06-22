@@ -85,6 +85,7 @@ class FighterBioItemLoader(FighterItemLoader):
 class MainFighterStatsItemLoader(FighterItemLoader):
     default_item_class = MainFighterStatsItem
     strinking_stats_out = TakeFirst()
+    grappling_stats_out = TakeFirst()
 
 class StrikingStatsItemLoader(FighterItemLoader):
     default_item_class = StrikingStatsItem
