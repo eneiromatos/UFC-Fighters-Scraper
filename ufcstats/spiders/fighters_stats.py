@@ -2,8 +2,8 @@ import scrapy
 from .. import items
 
 
-class PlayersStatsSpider(scrapy.Spider):
-    name = "players_stats"
+class FightersStatsSpider(scrapy.Spider):
+    name = "fighters_stats"
     allowed_domains = ["ufc.com"]
 
     def start_requests(self):
@@ -58,6 +58,7 @@ class PlayersStatsSpider(scrapy.Spider):
         )
         item.add_value("strinking_stats", self.parse_striking_stats(response))
         item.add_value("grappling_stats", self.parse_grappling_stats(response))
+        item.add_value("win_by_way", self.parse_win_way(response))
         yield item.load_item()
 
     def parse_striking_stats(self, response):
@@ -85,6 +86,7 @@ class PlayersStatsSpider(scrapy.Spider):
             "sig_strikes_absorbed_per_min",
             stats[1].css('div[class*="number"]::text').get(),
         )
+        item.add_value('sig_str_by_position', self.parse_str_possition(response))
 
         yield item.load_item()
 
@@ -117,10 +119,40 @@ class PlayersStatsSpider(scrapy.Spider):
         yield item.load_item()
 
     def parse_str_possition(self, response):
-        pass
+        graph_stats = response.css(".c-stats-group-3col__item")
+        for stats in graph_stats:
+            if "Sig. Str. By Position" in stats.css("h2::text").get():
+                item = items.StrPossitionItemLoader(selector=stats)
+                item.add_css(
+                    "standing",
+                    ".c-stat-3bar__group:nth-child(1) .c-stat-3bar__value::text",
+                )
+                item.add_css(
+                    "clinch",
+                    ".c-stat-3bar__group:nth-child(2) .c-stat-3bar__value::text",
+                )
+                item.add_css(
+                    "ground",
+                    ".c-stat-3bar__group:nth-child(3) .c-stat-3bar__value::text",
+                )
+                yield item.load_item()
 
     def parse_str_target(self, response):
         pass
 
     def parse_win_way(self, response):
-        pass
+        graph_stats = response.css(".c-stats-group-3col__item")
+        for stats in graph_stats:
+            if "Win By Way" in stats.css("h2::text").get():
+                item = items.WinWayItemLoader(selector=stats)
+                item.add_css(
+                    "ko_tko",
+                    ".c-stat-3bar__group:nth-child(1) .c-stat-3bar__value::text",
+                )
+                item.add_css(
+                    "dec", ".c-stat-3bar__group:nth-child(2) .c-stat-3bar__value::text"
+                )
+                item.add_css(
+                    "sub", ".c-stat-3bar__group:nth-child(3) .c-stat-3bar__value::text"
+                )
+                yield item.load_item()
