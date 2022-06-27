@@ -1,13 +1,13 @@
 import re
 from scrapy import Item, Field
 from itemloaders import ItemLoader
-from itemloaders.processors import TakeFirst, Join, Compose, Identity
+from itemloaders.processors import TakeFirst, Compose
 
 
 class WinWayItem(Item):
     ko_tko = Field()
     dec = Field()
-    submission = Field()
+    sub = Field()
 
 
 class StrTargetItem(Item):
@@ -73,6 +73,11 @@ def clean_text(text: str):
     return text
 
 
+def clean_parenthesis(text: str):
+    text = re.sub(r" \(\d*%\)| \(\d* %\)", "", text)
+    return text
+
+
 class FighterItemLoader(ItemLoader):
     default_output_processor = Compose(TakeFirst(), clean_text)
 
@@ -86,9 +91,12 @@ class MainFighterStatsItemLoader(FighterItemLoader):
     default_item_class = MainFighterStatsItem
     strinking_stats_out = TakeFirst()
     grappling_stats_out = TakeFirst()
+    win_by_way_out = TakeFirst()
+
 
 class StrikingStatsItemLoader(FighterItemLoader):
     default_item_class = StrikingStatsItem
+    sig_str_by_position_out = TakeFirst()
 
 
 class GrapplingStatsItemLoader(FighterItemLoader):
@@ -96,6 +104,7 @@ class GrapplingStatsItemLoader(FighterItemLoader):
 
 
 class StrPossitionItemLoader(FighterItemLoader):
+    default_output_processor = Compose(TakeFirst(), clean_text, clean_parenthesis)
     default_item_class = StrPossitionItem
 
 
@@ -105,3 +114,4 @@ class StrTargetItemLoader(FighterItemLoader):
 
 class WinWayItemLoader(FighterItemLoader):
     default_item_class = WinWayItem
+    default_output_processor = Compose(TakeFirst(), clean_text, clean_parenthesis)
