@@ -1,3 +1,4 @@
+from __future__ import division
 import re
 from scrapy import Item, Field
 from itemloaders import ItemLoader
@@ -89,6 +90,11 @@ def clean_parenthesis(text: str):
     return text
 
 
+def clean_division(text: str):
+    text = text.replace(" \u2022 ", ": ")
+    return text
+
+
 class FighterItemLoader(ItemLoader):
     default_output_processor = Compose(TakeFirst(), clean_text)
 
@@ -97,6 +103,7 @@ class FighterBioItemLoader(FighterItemLoader):
     default_item_class = FighterBioItem
     records_out = TakeFirst()
     fighter_stats_out = TakeFirst()
+    division_out = Compose(TakeFirst(), clean_text, clean_division)
 
 
 class MainFighterStatsItemLoader(FighterItemLoader):
