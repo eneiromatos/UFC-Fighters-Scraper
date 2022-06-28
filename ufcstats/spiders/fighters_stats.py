@@ -38,43 +38,52 @@ class FightersStatsSpider(scrapy.Spider):
         for field in bio_fields:
             if "Status" == field.css(".c-bio__label::text").get():
                 item.add_value("status", field.css(".c-bio__text::text").get())
-            if "Hometown" == field.css(".c-bio__label::text").get():
+            elif "Hometown" == field.css(".c-bio__label::text").get():
                 item.add_value("hometown", field.css(".c-bio__text::text").get())
-            if "Trains at" == field.css(".c-bio__label::text").get():
+            elif "Trains at" == field.css(".c-bio__label::text").get():
                 item.add_value("trains_at", field.css(".c-bio__text::text").get())
-            if "Fighting style" == field.css(".c-bio__label::text").get():
+            elif "Fighting style" == field.css(".c-bio__label::text").get():
                 item.add_value("fighting_style", field.css(".c-bio__text::text").get())
-            if "Age" == field.css(".c-bio__label::text").get():
+            elif "Age" == field.css(".c-bio__label::text").get():
                 item.add_value("age", field.css(".c-bio__text .field::text").get())
-            if "Height" == field.css(".c-bio__label::text").get():
+            elif "Height" == field.css(".c-bio__label::text").get():
                 item.add_value("height", field.css(".c-bio__text::text").get())
-            if "Weight" == field.css(".c-bio__label::text").get():
+            elif "Weight" == field.css(".c-bio__label::text").get():
                 item.add_value("weight", field.css(".c-bio__text::text").get())
-            if "Octagon Debut" == field.css(".c-bio__label::text").get():
+            elif "Octagon Debut" == field.css(".c-bio__label::text").get():
                 item.add_value("octagon_debut", field.css(".c-bio__text::text").get())
-            if "Reach" == field.css(".c-bio__label::text").get():
+            elif "Reach" == field.css(".c-bio__label::text").get():
                 item.add_value("reach", field.css(".c-bio__text::text").get())
-            if "Leg reach" == field.css(".c-bio__label::text").get():
+            elif "Leg reach" == field.css(".c-bio__label::text").get():
                 item.add_value("leg_reach", field.css(".c-bio__text::text").get())
 
+        item.add_value("records", self.parse_records(response))
         item.add_value("fighter_stats", self.parse_main_fighter_stats(response))
         yield item.load_item()
 
     def parse_main_fighter_stats(self, response):
         item = items.MainFighterStatsItemLoader(selector=response)
-        stats = response.css('div[class*="c-stat-compare__group"]')
-        item.add_value(
-            "knockdown_ratio", stats[6].css('div[class*="number"]::text').get()
-        )
-        item.add_value(
-            "avg_fight_time", stats[7].css('div[class*="number"]::text').get()
-        )
-        item.add_value(
-            "sig_strikes_defense", stats[4].css('div[class*="number"]::text').get()
-        )
-        item.add_value(
-            "takedown_defense", stats[5].css('div[class*="number"]::text').get()
-        )
+
+        stats = response.css('div[class*="c-stat-compare__group-"]')
+        for stat in stats:
+            if "Knockdown Ratio" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "knockdown_ratio", stat.css(".c-stat-compare__number::text").get()
+                )
+            elif "Average fight time" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "avg_fight_time", stat.css(".c-stat-compare__number::text").get()
+                )
+            elif "Sig. Str. Defense" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "sig_strikes_defense",
+                    stat.css(".c-stat-compare__number::text").get(),
+                )
+            elif "Takedown Defense" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "takedown_defense", stat.css(".c-stat-compare__number::text").get()
+                )
+
         item.add_value("strinking_stats", self.parse_striking_stats(response))
         item.add_value("grappling_stats", self.parse_grappling_stats(response))
         item.add_value("win_by_way", self.parse_win_way(response))
@@ -82,9 +91,8 @@ class FightersStatsSpider(scrapy.Spider):
 
     def parse_striking_stats(self, response):
         item = items.StrikingStatsItemLoader(selector=response)
-        stats = response.css('div[class*="c-stat-compare__group"]')
-        accuracy_card = response.css(".c-overlap-athlete-detail__card")
 
+        accuracy_card = response.css(".c-overlap-athlete-detail__card")
         for card in accuracy_card:
             if "striking" in card.css("h2::text").get().casefold():
                 item.add_value("accuracy", card.css("text::text").get())
@@ -96,23 +104,28 @@ class FightersStatsSpider(scrapy.Spider):
                     "sig_strikes_attempted",
                     card.css(".c-overlap__stats-value:nth-child(4)::text").get(),
                 )
-        item.add_value(
-            "sig_strikes_landed_per_min",
-            stats[0].css('div[class*="number"]::text').get(),
-        )
-        item.add_value(
-            "sig_strikes_absorbed_per_min",
-            stats[1].css('div[class*="number"]::text').get(),
-        )
+
+        stats = response.css('div[class*="c-stat-compare__group-"]')
+        for stat in stats:
+            if "Sig. Str. Landed" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "sig_strikes_landed_per_min",
+                    stat.css(".c-stat-compare__number::text").get(),
+                )
+            elif "Sig. Str. Absorbed" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "sig_strikes_absorbed_per_min",
+                    stat.css(".c-stat-compare__number::text").get(),
+                )
+
         item.add_value("sig_str_by_position", self.parse_str_possition(response))
         item.add_value("sig_str_by_target", self.parse_str_target(response))
         yield item.load_item()
 
     def parse_grappling_stats(self, response):
         item = items.GrapplingStatsItemLoader(selector=response)
-        stats = response.css('div[class*="c-stat-compare__group"]')
-        accuracy_card = response.css(".c-overlap-athlete-detail__card")
 
+        accuracy_card = response.css(".c-overlap-athlete-detail__card")
         for card in accuracy_card:
             if "grappling" in card.css("h2::text").get().casefold():
                 item.add_value("accuracy", card.css("text::text").get())
@@ -125,14 +138,18 @@ class FightersStatsSpider(scrapy.Spider):
                     card.css(".c-overlap__stats-value:nth-child(4)::text").get(),
                 )
 
-        item.add_value(
-            "takedowns_avg_per_15_min",
-            stats[2].css('div[class*="number"]::text').get(),
-        )
-        item.add_value(
-            "submission_avg_per_15_min",
-            stats[3].css('div[class*="number"]::text').get(),
-        )
+        stats = response.css('div[class*="c-stat-compare__group-"]')
+        for stat in stats:
+            if "Takedown avg" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "takedowns_avg_per_15_min",
+                    stat.css(".c-stat-compare__number::text").get(),
+                )
+            elif "Submission avg" == stat.css(".c-stat-compare__label::text").get():
+                item.add_value(
+                    "submission_avg_per_15_min",
+                    stat.css(".c-stat-compare__number::text").get(),
+                )
         yield item.load_item()
 
     def parse_str_possition(self, response):
@@ -177,3 +194,47 @@ class FightersStatsSpider(scrapy.Spider):
                     "sub", ".c-stat-3bar__group:nth-child(3) .c-stat-3bar__value::text"
                 )
                 yield item.load_item()
+
+    def parse_records(self, response):
+        item = items.RecordsItemLoader(selector=response)
+
+        records = response.css(".c-record")
+        for record in records:
+            if "Fight Win Streak" == record.css(".c-record__promoted-text::text").get():
+                item.add_value(
+                    "fight_win_streak",
+                    record.css(".c-record__promoted-figure::text").get(),
+                )
+            if "Wins by Knockout" == record.css(".c-record__promoted-text::text").get():
+                item.add_value(
+                    "wins_by_knockout",
+                    record.css(".c-record__promoted-figure::text").get(),
+                )
+            if (
+                "Wins by Submission"
+                == record.css(".c-record__promoted-text::text").get()
+            ):
+                item.add_value(
+                    "wins_by_submission",
+                    record.css(".c-record__promoted-figure::text").get(),
+                )
+            if "Wins by Decision" == record.css(".c-record__promoted-text::text").get():
+                item.add_value(
+                    "wins_by_decision",
+                    record.css(".c-record__promoted-figure::text").get(),
+                )
+            if (
+                "First Round Finishes"
+                == record.css(".c-record__promoted-text::text").get()
+            ):
+                item.add_value(
+                    "first_round_finishes",
+                    record.css(".c-record__promoted-figure::text").get(),
+                )
+            if "Title Defenses" == record.css(".c-record__promoted-text::text").get():
+                item.add_value(
+                    "title_defenses",
+                    record.css(".c-record__promoted-figure::text").get(),
+                )
+
+        yield item.load_item()
