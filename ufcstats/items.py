@@ -58,10 +58,11 @@ class FighterBioItem(Item):
     division = Field()
     hometown = Field()
     trains_at = Field()
+    fighting_style = Field()
     age = Field()
     height = Field()
     weight = Field()
-    debut = Field()
+    octagon_debut = Field()
     reach = Field()
     leg_reach = Field()
     fighter_stats = Field()
@@ -97,6 +98,7 @@ class MainFighterStatsItemLoader(FighterItemLoader):
 class StrikingStatsItemLoader(FighterItemLoader):
     default_item_class = StrikingStatsItem
     sig_str_by_position_out = TakeFirst()
+    sig_str_by_target_out = TakeFirst()
 
 
 class GrapplingStatsItemLoader(FighterItemLoader):
