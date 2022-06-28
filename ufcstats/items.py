@@ -4,6 +4,15 @@ from itemloaders import ItemLoader
 from itemloaders.processors import TakeFirst, Compose
 
 
+class PecordsItem(Item):
+    fight_win_streak = Field()
+    wins_by_knockout = Field()
+    wins_by_submission = Field()
+    wins_by_decision = Field()
+    first_round_finishes = Field()
+    title_defenses = Field()
+
+
 class WinWayItem(Item):
     ko_tko = Field()
     dec = Field()
@@ -65,6 +74,7 @@ class FighterBioItem(Item):
     octagon_debut = Field()
     reach = Field()
     leg_reach = Field()
+    records = Field()
     fighter_stats = Field()
 
 
@@ -85,6 +95,7 @@ class FighterItemLoader(ItemLoader):
 
 class FighterBioItemLoader(FighterItemLoader):
     default_item_class = FighterBioItem
+    records_out = TakeFirst()
     fighter_stats_out = TakeFirst()
 
 
@@ -117,3 +128,7 @@ class StrTargetItemLoader(FighterItemLoader):
 class WinWayItemLoader(FighterItemLoader):
     default_item_class = WinWayItem
     default_output_processor = Compose(TakeFirst(), clean_text, clean_parenthesis)
+
+
+class RecordsItemLoader(FighterItemLoader):
+    default_item_class = PecordsItem
