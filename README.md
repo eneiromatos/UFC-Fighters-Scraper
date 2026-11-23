@@ -68,14 +68,21 @@ Fields UFC doesn't show for a given fighter are left out of that fighter's recor
 
 ## Tests
 
-The tests run offline against saved copies of UFC.com pages in `tests/fixtures/`:
+The tests run offline against saved copies of UFC.com pages in `tests/fixtures/` (trimmed down to just the parts the scraper reads):
 
 ```
 pip install -r requirements-dev.txt
 pytest
 ```
 
-If UFC redesigns its site, re-download the fixture pages; the failing tests point at the fields whose selectors need updating.
+If UFC redesigns its site, re-download the fixture pages and re-run the tests; the failing tests point at the fields whose selectors need updating:
+
+```
+python tests/update_fixtures.py
+pytest
+```
+
+Fighters' stats change over time, so a few expected values in the tests may need updating after a re-download too.
 
 ## Note
 

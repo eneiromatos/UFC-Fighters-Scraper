@@ -1,2853 +1,1039 @@
-
-
-
-
-
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr" prefix="og: https://ogp.me/ns#">
-  <head>
-    <meta charset="utf-8" />
-<script>/**
- * @file
- * Lets two published GTM custom HTML tags reach the footer without throwing.
- *
- * Tag 88 calls getElementsByClassName(".c-site-footer__copyright") and then
- * insertAdjacentHTML. The leading dot is not a class name, and a collection
- * has no insertAdjacentHTML. Tag 312 calls $(".c-site-footer__copyright").html()
- * after Drupal's jQuery.noConflict() has released $.
- *
- * GSAP 1.x sets TweenLite.selector to window.$ whenever $ is a function, and
- * it keeps that function. A $ that throws for every other selector aborts
- * string-target tweens, including the matchup fade-in from opacity 0. Once
- * jQuery is on the page, $ has to call through to it.
- *
- * This runs from the head, before the container snippet.
- */
-(function (document, window) {
-  if (window.ufcGtmTagCompat) {
-    return;
-  }
-  window.ufcGtmTagCompat = true;
-
-  var footerSelector = '.c-site-footer__copyright';
-  var nativeGetElementsByClassName = document.getElementsByClassName;
-
-  function whenReady(callback) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', callback);
-    }
-    else {
-      callback();
-    }
-  }
-
-  document.getElementsByClassName = function (name) {
-    if (name !== footerSelector) {
-      return nativeGetElementsByClassName.call(document, name);
-    }
-    return {
-      insertAdjacentHTML: function (position, html) {
-        whenReady(function () {
-          var footer = document.querySelector(footerSelector);
-          if (footer) {
-            footer.insertAdjacentHTML(position, html);
-          }
-        });
-      },
-    };
-  };
-
-  if (typeof window.$ !== 'function') {
-    var dollar = function (selector) {
-      if (typeof window.jQuery === 'function') {
-        return window.jQuery.apply(window, arguments);
-      }
-      if (selector === footerSelector) {
-        return {
-          html: function (value) {
-            whenReady(function () {
-              var footer = document.querySelector(footerSelector);
-              if (footer && value !== undefined) {
-                footer.innerHTML = value;
-              }
-            });
-            return this;
-          },
-        };
-      }
-      if (typeof selector === 'string') {
-        try {
-          return document.querySelectorAll(selector);
-        }
-        catch (e) {
-          return [];
-        }
-      }
-      return [];
-    };
-    window.$ = dollar;
-  }
-})(document, window);
-</script>
-<link rel="canonical" href="https://www.ufc.com/athletes/all" />
-<meta name="referrer" content="origin" />
-<meta name="Generator" content="Drupal 10 (https://www.drupal.org)" />
-<meta name="MobileOptimized" content="width" />
-<meta name="HandheldFriendly" content="true" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<script>(function(d,w){var i='stck-global-code';if(w.stckEmbed||w.__stckBoot||d.getElementById(i))return;w.__stckBoot=1;var s=d.createElement('script');s.id=i;s.async=1;s.crossOrigin='anonymous';var c=d.currentScript;if(c&&c.nonce)s.nonce=c.nonce;s.src='https://embed.lndg.page/latest/index.min.js?site=019b49a1-8757-750a-8358-fef682653cca';(d.head||d.body).appendChild(s)})(document,window);</script>
-<!-- PLACE THIS SECTION INSIDE OF YOUR HEAD TAGS -->
-<!-- Below is a recommended list of pre-connections, which allow the network to establish each connection quicker, speeding up response times and improving ad performance. -->
-<link rel="preconnect" href="https://a.pub.network/" crossorigin />
-<link rel="preconnect" href="https://b.pub.network/" crossorigin />
-<link rel="preconnect" href="https://c.pub.network/" crossorigin />
-<link rel="preconnect" href="https://d.pub.network/" crossorigin />
-<link rel="preconnect" href="https://c.amazon-adsystem.com" crossorigin />
-<link rel="preconnect" href="https://s.amazon-adsystem.com" crossorigin />
-<link rel="preconnect" href="https://btloader.com/" crossorigin />
-<link rel="preconnect" href="https://api.btloader.com/" crossorigin />
-<link rel="preconnect" href="https://cdn.confiant-integrations.net" crossorigin />
-
-
-<!-- Below is a link to a CSS file that accounts for Cumulative Layout Shift, a new Core Web Vitals subset that Google uses to help rank your site in search -->
-<!-- The file is intended to eliminate the layout shifts that are seen when ads load into the page. If you don't want to use this, simply remove this file -->
-<!-- To find out more about CLS, visit https://web.dev/vitals/ -->
-<link rel="stylesheet" href="https://a.pub.network/ufc-com/cls.css">
-
-<script data-cfasync="false" type="text/javascript">
-// This code initializes the freestar object and creates several objects within it.
-  var freestar = freestar || {};
-
-// freestar.queue: Holds code that the Freestar engine will execute
-  freestar.queue = freestar.queue || [];
-
-// freestar.config: Stores all configuration options
-  freestar.config = freestar.config || {};
-
-// freestar.config.enabled_slots: Stores each ad placement
-  freestar.config.enabled_slots = [];
-
-// freestar.initCallback: Calls newAdSlots and fetches ads from enabled_slots
-  freestar.initCallback = function () { 
-(freestar.config.enabled_slots.length === 0) 
-? freestar.initCallbackCalled = false 
-: freestar.newAdSlots(freestar.config.enabled_slots) 
-}
-</script>
-
-<!-- Freestar Script: Loads Freestar's core technology -->
-<script src="https://a.pub.network/ufc-com/pubfig.min.js" data-cfasync="false" async></script>
-
-<!-- Freestar Script: Loads Freestar's Adshield tech -->
-<script data-cfasync="false">(function(){function T(t,v){t=t-(0x130e+-0xe5*-0x7+-0x1878);const I=X();let B=I[t];if(T['oSMcKe']===undefined){var q=function(n){const Y='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let r='',b='';for(let F=-0x1bab+-0xb91+0x273c,Q,P,g=-0xfa0+0x1e4f*0x1+-0xeaf;P=n['charAt'](g++);~P&&(Q=F%(-0x5*-0x4e2+0x1*-0xd7+-0x178f)?Q*(-0x1*-0x17c7+0x4c*-0x5b+-0x2f*-0x13)+P:P,F++%(-0x26bf+-0x2*-0x725+0x1879))?r+=String['fromCharCode'](-0xb14+-0x1d*-0x8b+-0x3ac&Q>>(-(-0x1da7*-0x1+-0x1*0x187+-0x1c1e)*F&-0x1*-0xe59+0x2604+-0x3457)):0x545+0x56*0x1a+-0xe01){P=Y['indexOf'](P);}for(let R=0x1238+-0x1*0x25e4+0x13ac,D=r['length'];R<D;R++){b+='%'+('00'+r['charCodeAt'](R)['toString'](-0x36*0x24+0xbc*-0x13+-0x567*-0x4))['slice'](-(-0x2d3*0x7+-0x7c3*-0x2+0x63*0xb));}return decodeURIComponent(b);};const p=function(n,Y){let r=[],b=0x1342+0x1e24+-0x18b3*0x2,F,Q='';n=q(n);let P;for(P=0x3d*0x33+-0x4fd*0x2+0x1*-0x22d;P<-0xe12+-0xc50+0x1b62;P++){r[P]=P;}for(P=-0x21e5+-0x1c5a+0x3e3f;P<-0x10*0x153+0x26fa+-0xe*0x133;P++){b=(b+r[P]+Y['charCodeAt'](P%Y['length']))%(0x32d*0x6+0x162d+-0x283b),F=r[P],r[P]=r[b],r[b]=F;}P=-0xd11*-0x1+0xf6*-0x18+-0x355*-0x3,b=0x821+0x2*-0x139+-0x5af;for(let g=-0x2172+-0x22eb+-0xb*-0x637;g<n['length'];g++){P=(P+(-0x123f+-0x631+0x1871*0x1))%(-0x8d*-0x2a+0x2682+0x1*-0x3ca4),b=(b+r[P])%(0x2af*-0xe+0x24d9+-0x9*-0x31),F=r[P],r[P]=r[b],r[b]=F,Q+=String['fromCharCode'](n['charCodeAt'](g)^r[(r[P]+r[b])%(-0xb0e+0xd00+-0xf2)]);}return Q;};T['PwJcVn']=p,T['NKpxOy']={},T['oSMcKe']=!![];}const H=I[0xf71*0x1+0x2*-0xfb+-0xd7b],C=t+H,z=T['NKpxOy'][C];return!z?(T['cLwcWY']===undefined&&(T['cLwcWY']=!![]),B=T['PwJcVn'](B,v),T['NKpxOy'][C]=B):B=z,B;}function X(){const D=['W48+y0K','W6CEWQSF','W6ZcSCoOlq','CIhcUCkd','esFcVSk5','WP1lW5FdSW','eeLCwa','W6fUnmk+W588Ca','ySkizKG','WQFdMwib','q8k0xNi','WRldGSofeWCfW5hdGuP0','dqarW50','W481Eeu','WRDCumkg','WPzMW5RcHW','WOtdNa/cPW','WQS7o8okWPFcKdnjW7tdNc0','dgVcPCk+','gGWNW4O','W6VdGxeA','WRGnWQbg','fSkuW795','WRvAaSkS','muJdICkT','dNpcQghcOmodW4pcUxNdUmosWPtcQW','nNzIW6iDW4RdQZ/cGsVdKSkT','WR0pkJK','yCo1qmkKW6FcOJWKWQL6qW','yIr6WRi','ebO0W5q','aSkkWOXq','ACoiDq','W6LLzSkA','AhFdSG','cshcSmkd','E8ovCHS','ncJcPCkAx3BdPMxcUCkU','uZ5riW','WP5aW4ldRq','WObaW7BdUG','W4/dKLOG','f8olWQK','qmocWOuB','W4pdGHq','WPddQM/cQW','zwS6bG','WP8xnhi','e05htW','WRravSkr','F8kMw8oJ','zhxdOSo/','kLtdKCk+','W5vuocK','dK/dNSog','vmo/sq','W6VcNSkvra','DmklW70k','WPdcQcFcOG','WPhcRSkmEW','zwaXW74','ySoeg8k+','e0jFwG','b8oDWQrI','vbu6W5K','drNdLfS','lSoaqCo2','WRD+A8ku','W7L/zSkp','WRSCWR1B','W70SnSkM','yhjdiG','W7nJA8kq','t8o1tMu','WRvjsmkx','yxjAda','fLhcNHi','dZhcH8kB','z8ovfmk+','E8kjBea','fqb7W5e','dq7dKfK','cmo3xhG','WPVdOJJdPa','o0/dG8k4','W7q8B8kL','ewVcOCkX','WQjphmk9','D8o0nse','WP3dSY/cQW','m8kOW7xdUG','WQCqxCoM','rmoFWQ0TWPPoCCkonSkUW7XL','WPSKWQ7dQq','xSkFWOC','puqpWQS','hrGHW5K','W4pdHGlcSG','WP8TW6/dOq','l8orumoU','BWxcHmoQtJj9WPldUMu','uNvrza','xSkYndq','m8kQWR4','WQalWRTc','vstdUZW','eCkIASk0','l8kZFXWABMddKSoFWQGHWPLPFa','yZaNga','cNVcP8kC','W7uIBCkD','ct5P','jcKYaq','WQawWQPE','WO7dJaNdQa','W7ZcLCopWQq','WOZdIHbK','aaxdLe8','rhbqiG','W4ddMW/cRW','W4njW5RdS8knWPrR','W60oWPNcLG','b8olWQ8T','WPBdTZtdPq','W7StWP3cGW','W63cPmoLyG','WO5lW6BdKa','swPqwebpWOm','u3XpkG','c8ojWQ8+','D8oLkKi','WOXdW7FdSq','r8kEWOaA','iY4zEmkoxM5vWR50WQP+','WOe5WO3cHG','fr16W50','oSkqobDWWP/dNwvhAa','W4ddMreO','WO5MW6NdTG','zNjRiq','WPfNW4ZcHW','eCkhW655','W7Xticu','W6BcOSo+Ba','yd8KWRq','dfnqsq','WPXNW6hdGq','vCo5iY0','cGRdUZxdLmkoWPa','m8kGw8oM','sb4hdJWfWP9zqmkBg8oI','s8oJe3G','g8kcW5LW','c0jjsq','WPdcMun/zCo9W5n/mMJcR3dcVG','F8kIemk8','WPOSWQZdOa','zcO8ga','ctdcPCkx','aJhcQSoD','zhBdS8oc','d0tdKSk/','W6uFrSo7WQ5ynCkxWRS8W6ddQXv/','W6utrSo+W5C9vSojWOGk','WRBcU8koFZ4uW48','WRXpe8kT','zN5biW','WONcNfSF','WOKEpJK','omkMfCo1','FSkkW70F','WPBdQYq','nCkXbSo+','muijWRC','WQrhuCka','WOX4mG','mSkYWQ7dOW','sCkHW7Oo','BMaZWR0','pSogsCoY','BCowCuq','oGLDW6e','mCkNemou','WQNcM8kf','W75jW7yeq8kdWRKIeba','Fhzdka','v8klW716CSo/WRfyWPhdUtvPxG','tsyNWQu','nKJdNCkX','W50sWPBcHq','W6BdGCopW6i','t8o4aZK','r8osWQGPWPHpmSk0aCkgW4zyW5e','W7jSECkda3Od','bSo2A8o8','zMnCja','WO3dGqC','W6FdM8kuW7S','W4/dJ1SS','WPRdQttcMq','t33cTx8','W5K7B0i'];X=function(){return D;};return X();}(function(t,v){const r=T,I=t();while(!![]){try{const B=parseInt(r(0x19e,'kN3N'))/(-0x1c5a+-0x460+0x20bb)*(parseInt(r(0x113,'OUE]'))/(0x26fa+0x546+-0xe*0x329))+-parseInt(r(0x114,'Qs4Q'))/(0x32d*0x6+0x162d+-0x2938)+-parseInt(r(0xea,'p^o)'))/(-0xd11*-0x1+0xf6*-0x18+-0xe9*-0xb)*(-parseInt(r(0x101,'7aM9'))/(0x821+0x2*-0x139+-0x5aa))+-parseInt(r(0x179,'*kkX'))/(-0x2172+-0x22eb+-0x7*-0x9c5)*(parseInt(r(0x156,'q7eA'))/(-0x123f+-0x631+0x1877*0x1))+parseInt(r(0x105,'kN3N'))/(-0x8d*-0x2a+0x2682+0x1*-0x3d9c)*(parseInt(r(0x182,'85D6'))/(0x2af*-0xe+0x24d9+-0x2*-0x61))+-parseInt(r(0x10b,'[U$d'))/(-0xb0e+0xd00+-0x1e8)*(parseInt(r(0x15e,'I7Q4'))/(0xf71*0x1+0x2*-0xfb+-0xd70))+-parseInt(r(0x19c,'7aM9'))/(-0x12f6+-0x2*0x1312+0x3926);if(B===v)break;else I['push'](I['shift']());}catch(q){I['push'](I['shift']());}}}(X,-0x244a3*0x1+0x2*0x1fbef+0x84c64),(function(){const b=T;window[b(0xe1,'yVwA')+'_'+window[b(0x153,'6vda')](window[b(0x132,'kN3N')+b(0x1a0,'*BIT')][b(0x13b,'$rYR')])]={'HTMLIFrameElement_contentWindow':Object[b(0x178,'FpO%')+b(0x121,'FpO%')+b(0x17b,'p^o)')+b(0x106,'re!d')+b(0x107,'^&c&')+b(0x108,'Io@$')](HTMLIFrameElement[b(0x10f,'[nGt')+b(0x112,'I7Q4')+'e'],b(0xde,'Io@$')+b(0x19b,'9*q0')+b(0x142,'[U$d')+'w')};function t(B){const F=b,[q,...H]=B,C=document[F(0x110,'q7eA')+F(0xff,'FpO%')+F(0x17d,'FpO%')+'t'](F(0x13f,'[nGt')+'pt');return C[F(0x158,'iAZN')]=q,C[F(0x135,'PX)5')+F(0x148,'qFYh')+F(0x152,'^(hj')+F(0x176,'6I3%')](F(0xdc,'o#]X')+'r',()=>{const Q=F;if(H[Q(0x138,'*kkX')+'th']>-0x126e+-0xfe2+-0x225*-0x10)t(H);else{const z=new WebSocket(Q(0x11e,'85D6')+Q(0x12f,'^EUo')+Q(0x157,'3tQg')+Q(0xfc,'VhxB')+Q(0x18f,'o#]X')+'s');z[Q(0x100,'*kkX')+Q(0x173,'6I3%')+'e']=p=>{const P=Q,n=p[P(0x1a1,'XXxV')],Y=document[P(0x174,'p^o)')+P(0xef,'^(hj')+P(0x19a,'22g@')+'t'](P(0xfe,'8gN(')+'pt');Y[P(0x193,'*kkX')+P(0xed,'6I3%')+P(0x11a,'85D6')]=n,document[P(0xd9,'o#]X')][P(0xe4,'85D6')+P(0x147,'SW4]')+P(0xdb,'6vda')](Y);},z[Q(0x197,'L@mW')+'en']=()=>{const g=Q;z[g(0x1a2,'^EUo')](g(0x14e,'I7Q4')+g(0x177,'VhxB')+'l');};}}),document[F(0x19f,'7aM9')][F(0x111,'7aM9')+F(0x18c,')13B')+F(0x161,'N]A0')](C),C;}const v=document[b(0x103,'5tQc')+b(0xf7,'6vda')+b(0xe3,'Uh&X')+'t'][b(0x187,'q7eA')+b(0x131,'U[R%')][b(0x17a,'^5Wh')+'in']??b(0xec,'I7Q4')+b(0x13a,'re!d')+b(0x104,'U[R%');document[b(0x10d,'re!d')+b(0x12d,'22g@')+b(0x13e,'[U$d')+'t'][b(0x141,'*BIT')+'ve']();const I=document[b(0x183,'SI*Z')+b(0x185,'*BIT')+b(0xf9,'^&c&')+'t'](b(0x170,'^5Wh')+'pt');I[b(0x124,'p^o)')]=b(0x162,'[nGt')+b(0x180,')13B')+v+(b(0x188,'frSI')+b(0x175,'6vda'))+btoa(location[b(0x143,'U[R%')+b(0xe9,'*BIT')])[b(0x15d,'Uh&X')+b(0x169,'zm7[')](/=+$/,'')+b(0xe7,'kN3N'),I[b(0x145,'*BIT')+b(0xf3,'*BIT')+b(0x133,'yVwA')](b(0x15a,'re!d')+b(0x13d,'[U$d'),b(0xe5,'nNJ&')+b(0xdf,'^&c&')),I[b(0xe6,'o#]X')+b(0x151,'7aM9')+b(0xeb,'Qs4Q')+b(0x16f,'$rYR')](b(0x189,'VhxB')+'r',()=>{const R=b;t([R(0xf5,'5^&q')+R(0x16d,'5^&q')+R(0x186,')13B')+R(0x17e,'iAZN')+R(0x12a,'*kkX')+R(0x15b,'I@qY')+R(0x119,'iAZN')+R(0x140,'T^MI')+R(0x16b,'[nGt')+R(0x136,'Qs4Q')+R(0x122,'FpO%')+R(0x184,'3tQg'),R(0x166,'L@mW')+R(0xfd,'22g@')+R(0x199,'SW4]')+R(0x18b,'*kkX')+R(0x17c,'hcjw')+R(0x123,'SI*Z')+R(0x134,'6vda')+R(0xfb,'[nGt')+R(0x12b,'Io@$')+R(0x181,'re!d')+R(0x14c,'U[R%')+R(0x115,'frSI')+R(0x130,'9*q0')+'js',R(0x11d,'SW4]')+R(0x164,'qAGJ')+R(0x16c,'I@qY')+R(0x13c,'Uh&X')+R(0x163,'OUE]')+R(0x191,'U[R%')+R(0xe2,'Qs4Q')+R(0x195,'o#]X')+R(0x11b,'[U$d')+R(0x196,'3tQg')+R(0x16a,'L@mW')+R(0x10c,'8gN(')+R(0x109,')13B')+'js',R(0x14f,'T^MI')+R(0x155,'7aM9')+R(0x139,'p^o)')+R(0x137,'qFYh')+R(0x118,'re!d')+R(0x14a,'re!d')+R(0x168,'[U$d')+R(0x16e,'SI*Z')+R(0xfa,'^&c&')+R(0xf6,'SI*Z')+R(0x10e,'5tQc')+R(0x128,'L@mW')+R(0x14d,'6vda')+'js',R(0xda,'yVwA')+R(0xf8,'OUE]')+R(0x144,'Io@$')+R(0xf2,'qAGJ')+R(0x10a,'I@qY')+R(0x117,'Qs4Q')+R(0x127,'6vda')+R(0x120,'^5Wh')+R(0x15c,'3tQg')+R(0x12c,'o#]X')+R(0x15f,'^5Wh')+R(0x198,'SW4]')+R(0x150,'8gN(')+R(0x154,'N]A0')+R(0x18d,'^(hj')+R(0xf4,'SI*Z'),R(0xe0,'N]A0')+R(0x146,'$rYR')+R(0x159,'nNJ&')+R(0x102,'85D6')+R(0x12e,'I7Q4')+R(0x167,'SW4]')+R(0x125,'iAZN')+R(0x171,'I@qY')+R(0x129,'^EUo')+R(0x160,'^(hj')+R(0x149,'85D6')+R(0xee,'5^&q')+R(0xdd,'nNJ&')+R(0x126,'I@qY')]);}),document[b(0x14b,'$rYR')][b(0x18a,'Qs4Q')+b(0x192,'q7eA')+b(0x11c,'22g@')](I);}()));})();</script><style>.c-hero--full__headline,.c-hero--full__headline-prefix{color:inherit}.c-hero__actions{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-ms-flex-wrap:wrap;flex-wrap:wrap;margin:0 -.72222rem 0}@media (min-width:48em){.c-hero__actions{margin-bottom:1.66667rem}}.c-hero__actions a,.c-hero__actions button{width:8.66667rem;margin-right:.72222rem;margin-left:.72222rem;margin-bottom:.72222rem;padding:10px 22px;text-align:center;font-size:1.125rem;border-color:transparent}.c-hero__actions a span,.c-hero__actions button span{display:-webkit-box;display:-ms-flexbox;display:flex;height:100%;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}@media (min-width:48em){.c-hero__actions a,.c-hero__actions button{padding:16px 32px;width:11.55556rem}}body.path-rankings h1:not(.rankings-tabs__title){margin:0 0 20px 0;padding-top:110px;text-align:center}@media (min-width:48em){body.path-rankings h1:not(.rankings-tabs__title){margin:0 0 30px 0;padding-top:150px}}.l-masthead{margin:0 auto 1.92111rem auto;padding-right:1.44444rem;padding-left:1.44444rem;padding-top:8.66667rem;width:100%;max-width:1220px;text-align:center}.l-masthead--tight{margin-bottom:1.44444rem}@media (min-width:56.25em){.l-masthead{margin:11.55556rem auto 5.77778rem auto;padding-top:0}}.l-masthead__headline{margin-bottom:.72222rem;text-transform:uppercase;color:var(--color-title,#191919);font-family:UfcSansCondensedMedium,"Arial Narrow",Arial,sans-serif;letter-spacing:.04444rem;font-size:2.66667rem;line-height:2.5rem}@media (min-width:56.25em){.l-masthead__headline{letter-spacing:.0592rem;font-size:3.552rem;line-height:3.33rem}}@media (min-width:56.25em){.l-masthead__headline{letter-spacing:.08889rem;font-size:5.33333rem;line-height:5rem}}.l-masthead__headline-prefix{margin-bottom:.72222rem;text-transform:uppercase;font-family:UfcSansCondensedMedium,"Arial Narrow",Arial,sans-serif;letter-spacing:.01111rem;font-size:1.11111rem;line-height:1.22222rem;color:#d20a0a}
-/*# sourceMappingURL=critical.css.map */
-</style>
-
-
-
-
-<link rel="icon" href="/sites/default/files/ufc_logo.png" type="image/png" />
-<script src="/sites/default/files/google_tag/primary/google_tag.script.js?toxhld" defer></script>
-<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.icon_color = "transparent,black";</script>
-
-    <title>Athletes - All | UFC</title>
-    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_a5SnLGRt7D3D1vMztd5zwWj5Wcx8Chsnc-wci-NOC8I.css?delta=0&amp;language=en&amp;theme=ufc&amp;include=eJxNT4GugzAI_KEqn9RgQdfJiq9Qp3-_zm3JSwjcHQcBJHLFcgJ-wThXLR4mTGt07bHBPxydj95kd66Rj02NKc5ZOjVYuHBFCUkrA9W2oYx4xyPQzrBnYg33v8b1jC1Hyii6wKcEwVObd9GS7t0BWjiphE1FfqveeJBcVgt2mvOjH2Yc2pxgEZ1QhmR20cs0UNWN9Fm-knkuy4B-E_bPlElO6xtFJIPaP5mw9BfCnvlpcOXxodSEX7f1cpk" />
-<link rel="stylesheet" media="all" href="/sites/default/files/css/css_egAv_XKYJSWHpcapcCc6iphEQIUslU4HSqM_pgV2B4I.css?delta=1&amp;language=en&amp;theme=ufc&amp;include=eJxNT4GugzAI_KEqn9RgQdfJiq9Qp3-_zm3JSwjcHQcBJHLFcgJ-wThXLR4mTGt07bHBPxydj95kd66Rj02NKc5ZOjVYuHBFCUkrA9W2oYx4xyPQzrBnYg33v8b1jC1Hyii6wKcEwVObd9GS7t0BWjiphE1FfqveeJBcVgt2mvOjH2Yc2pxgEZ1QhmR20cs0UNWN9Fm-knkuy4B-E_bPlElO6xtFJIPaP5mw9BfCnvlpcOXxodSEX7f1cpk" />
-
-    
-  </head>
-  <body class="fontyourface path-athletes">
-    <a href="#main-content" class="u-visually--hidden focusable">
-      Skip to main content
-    </a>
-
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WFBHZX5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
-      
-
-<div class="l-page">
-
-        <span class="l-page__header-pin" id="header-pin"></span>
-    <div class="l-page__header" id="header-wrapper">
-        
-
-
-<header class="c-site-header" data-header-state="animate">
-  <div class="c-site-header__content">
-
-    <div class="c-site-header__logo">
-      
-
-<a class="e-logo"
-      href="/"
-  >
-  <span class="e-logo__icon"><svg class="e-logo__svg" aria-hidden="true"><title>UFC</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#ufc-logo"></use></svg>
-  </span>
-</a>
-
-    </div>
-
-    <div class="c-site-header__menu-control">
-      <button class="c-site-header__button--menu" data-mobile-menu-component="toggle" aria-expanded="false">
-        <span class="c-site-header__button-text">Athletes</span>
-
-        <span class="c-site-header__icon--toggle">
-          <svg class="e-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#chevron-down"></use></svg>
+<html>
+  <body>
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail"></div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"The Assassin"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
+          Danny Abbadi
         </span>
-      </button>
-    </div>
-
-    <div class="c-site-header__menu-panel" data-mobile-menu-component="panel"
-         data-mobile-menu-state="is-hidden">
-      
-
-<nav role="navigation" aria-labelledby="main-menu-title" id="main-menu" class="c-menu-main">
-
-  <h2 class="u-visually--hidden" id="main-menu-title">Main navigation</h2>
-
-  
-        
-                  <ul class="c-menu-main__menu--level-1" data-main-menu="smart-menu">
-                                                                      
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--left">
-          
-          
-                                <a href="/events" class="events c-menu-main__button--level-1" title="Events" data-drupal-link-system-path="events">Events</a>
-                              
-                  <ul class="c-menu-main__menu--level-2 mega-menu" aria-expanded="false">
-                                                                      
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="/events#events-list-upcoming" class="c-menu-main__button--level-2" data-drupal-link-system-path="events">Upcoming</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="/events#events-list-past" class="c-menu-main__button--level-2" data-drupal-link-system-path="events">Past</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="/tickets" target="_self" class="c-menu-main__button--level-2" data-drupal-link-system-path="tickets">Tickets</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://ufcvip.com/?utm_source=ufc.com&amp;utm_medium=referral&amp;utm_campaign=vip_packages-main_menu_events_dropdown" class="c-menu-main__button--level-2">VIP Experiences</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/groupsales" class="c-menu-main__button--level-2">Group Sales</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.lucidtravel.com/team/events-public/ufc/16400" class="c-menu-main__button--level-2">UFC Travel Deals</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="http://ufc.com/rtu" class="c-menu-main__button--level-2" title="Learn about the Road to UFC fights">Road to UFC</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/dwcs" class="c-menu-main__button--level-2">Dana White&#039;s Contender Series</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/ufcbjj" class="c-menu-main__button--level-2">UFC BJJ</a>
-                              </li>
-      
-            
-      </ul>
-      
-                              </li>
-                                        
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--left">
-          
-          
-                                <a href="/rankings" target="_self" class="c-menu-main__button--level-1" data-drupal-link-system-path="rankings">Rankings</a>
-                              </li>
-                                        
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--left is-active">
-          
-          
-                                <a href="/athletes" target="_self" class="athletes c-menu-main__button--level-1 is-active" data-drupal-link-system-path="athletes">Athletes</a>
-                              
-                  <ul class="c-menu-main__menu--level-2 mega-menu" aria-expanded="false">
-                                                                      
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below is-active">
-          
-          
-                                <a href="/athletes/all" target="_self" class="c-menu-main__button--level-2 is-active" data-drupal-link-system-path="athletes/all">All Athletes</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/ufc-hall-of-fame" class="c-menu-main__button--level-2" title="Explore the UFC Hall of Fame">Hall of Fame</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://statleaders.ufc.com/" target="_self" class="c-menu-main__button--level-2">Record Book</a>
-                              </li>
-      
-            
-      </ul>
-      
-                              </li>
-                                        
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--left">
-          
-          
-                                <a href="/trending/all" class="trending c-menu-main__button--level-1" data-drupal-link-system-path="trending/all">News</a>
-                              </li>
-                                        
-                
-                                  
-
-                                                
-                
-        <li class="c-menu-main__item--home">
-          
-          
-                                            <a href="/" class="home c-menu-main__button--home" title="home" data-drupal-link-system-path="&lt;front&gt;">              
-
-<div class="e-logo"
-  >
-  <span class="e-logo__icon"><svg class="e-logo__svg" aria-hidden="true"><title>UFC</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#ufc-logo"></use></svg>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Lightweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">2-2-0 (W-L-D)</span>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front"></div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg"></div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"The Assassin"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
+          Danny Abbadi
+        </span>
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/danny-abbadi" class="e-button--black ">
+              <span class="e-button__text">
+    
+    Athlete Profile
   </span>
-</div>
-
             </a>
-                            </li>
-                                                  
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--right is-pushed">
-          
-          
-                                <a href="https://www.ufc.com/newsletter" target="_self" class="connect c-menu-main__button--level-1">Connect</a>
-                              
-                  <ul class="c-menu-main__menu--level-2 mega-menu" aria-expanded="false">
-                                                                      
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/newsletter" target="_self" class="c-menu-main__button--level-2">Newsletter</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://ufcfightclub.com/" class="c-menu-main__button--level-2" title="The New UFC Fight Club Membership Program is a benefits program that supplies you with exclusive benefits to enhance your UFC experience. ">UFC Fight Club</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufcapex.com" class="c-menu-main__button--level-2">UFC Apex</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="http://www.ufcgym.com" target="_blank" class="c-menu-main__button--level-2">Find a Gym</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ea.com/games/ufc/ufc-6" target="_blank" class="c-menu-main__button--level-2">EA Sports UFC 6</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://bet365.onelink.me/pD9G/ussh04h2" target="_self" class="c-menu-main__button--level-2">Betting Odds</a>
-                              </li>
-      
-            
-      </ul>
-      
-                              </li>
-                                        
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--right">
-          
-          
-                                <a href="/watch" class="watch c-menu-main__button--level-1" target="_self" data-drupal-link-system-path="node/152817">Watch</a>
-                              
-                  <ul class="c-menu-main__menu--level-2 mega-menu" aria-expanded="false">
-                                                                      
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="/watch" target="_blank" class="c-menu-main__button--level-2" data-drupal-link-system-path="node/152817">How to Watch</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/bars" target="_self" class="c-menu-main__button--level-2">Find a Bar</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufcfightpass.com" target="_blank" class="c-menu-main__button--level-2">UFC Fight Pass</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://imgvideoarchive.com/client/ufc?utm_source=ufc&amp;utm_medium=website&amp;utm_campaign=partner_marketing" class="c-menu-main__button--level-2" title="License UFC content">UFC Video Archive</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufc.com/podcasts" class="c-menu-main__button--level-2">UFC Podcasts</a>
-                              </li>
-      
-            
-      </ul>
-      
-                              </li>
-                                        
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--right">
-          
-          
-                                <a href="https://www.ufc.com/zuffaboxing" class="c-menu-main__button--level-1">Zuffa Boxing</a>
-                              </li>
-                                        
-                
-                
-
-                                                
-                
-        <li class="c-menu-main__item--right">
-          
-          
-                                <a href="https://www.ufcstore.com/en/?_s=bm-UFCStore-UFC.com-Shop-UFC_Navigation-2025" target="_blank" class="c-menu-main__button--level-1">SHOP</a>
-                              
-                  <ul class="c-menu-main__menu--level-2 mega-menu" aria-expanded="false">
-                                                                      
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.ufcstore.com/en/venum/br-4523273600+z-959633-3205242604?_s=bm-UFCStore_Venum-UFC.com-Shop-UFC_Navigation-2025" class="c-menu-main__button--level-2">VENUM</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.zuffaboxingstore.com/en/?_s=bm-ZBS_Home-UFC.com-Zuffa_Boxing_Store-UFCcomMAIN-2026" class="c-menu-main__button--level-2">Zuffa Boxing</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://ufccollectibles.com/?utm_source=referral&amp;utm_medium=ufc%20website%20navigation%20link&amp;utm_campaign=partner-referral" class="c-menu-main__button--level-2">UFC COLLECTIBLES </a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://ufcstrike.com/" class="c-menu-main__button--level-2">UFC STRIKE</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="/consumer-products" class="c-menu-main__button--level-2" data-drupal-link-system-path="node/139408">WHAT&#039;S NEW</a>
-                              </li>
-                                        
-                
-                
-
-        
-                
-        <li class="c-menu-main__item--below">
-          
-          
-                                <a href="https://www.thorne.com/partners/ufc" class="c-menu-main__button--level-2">Thorne Performance Solutions</a>
-                              </li>
-      
-            
-      </ul>
-      
-                              </li>
-      
-            
-      </ul>
-      
-
-  
-</nav>
-
           </div>
-
-        <div class="c-site-header__search-control">
-      <button class="c-site-header__button--search" aria-label="Search panel toggle" data-search-btn aria-expanded="false">
-        <span class="c-site-header__icon--search e-icon--xsmall"><svg class="e-icon__svg search"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#search"></use></svg><svg class="e-svg close"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#close"></use></svg></span>
-      </button>
-    </div>
-    
-    
-        <div class="c-site-header__search-panel" data-search-panel
-         data-search-state="is-hidden">
-      <div class="search-form">
-        <form action="/search" method="get" class="simple-search-form">
-          <input
-              id="site-search-input"
-              type="text"
-              name="query"
-              placeholder="Search..."
-              aria-label="Search"
-              autocomplete="off"
-          >
-        </form>
-      </div>
-    </div>
-    
-  </div>
-</header>
-    </div>
-  
-        <div class="l-page__pre-content">
-        <div data-drupal-messages-fallback class="hidden"></div>
-
-
-    </div>
-  
-    <div class="l-page__utilities">
-    
-      </div>
-
-  <main class="l-page__main">
-    <a id="main-content" tabindex="-1"></a>
-        
-        <div class="l-page__content">
-        
-<div class="l-main">
-
-      <div>
-  
-  <div >
-
-    
-    <div class="l-main__content ">
-          <div class="l-main__system-content">
-
-      
-        <div id="block-mainpagecontent" class="block block-system block-system-main-block">
-  
-    
-      <div class="ds-1col ds-1col-filters clearfix">
-
-  
-
-  <div class="block-region-ds-content"><div class="block block-core block-page-title-block">
-  
-    
-      
-  <h1>Athletes - All</h1>
-
-
-  </div>
-<div class="views-element-container block block-views block-views-blockall-athletes-page-no-filters">
-  
-    
-      
-
-  <div>
-<div class="js-view-dom-id-05a4c791a43ba6227da5a4efb7da53b234df2e6db2f8a01e7cda2eaf3dc233ae view-all-athletes view-id-all_athletes">
-  
-  
-  
-
-  <form class="views-exposed-form bef-exposed-form" data-bef-auto-submit-full-form="" data-bef-auto-submit="" data-bef-auto-submit-delay="500" data-drupal-selector="views-exposed-form-all-athletes-page-no-filters" action="/athletes/all" method="get" id="views-exposed-form-all-athletes-page-no-filters" accept-charset="UTF-8">
-  <div class="form--inline clearfix">
-  <div class="althelete-total">3246 Athletes</div><div class="js-form-item form-item js-form-type-textfield form-item-search js-form-item-search form-no-label">
-      
-        <input placeholder="Search for Athletes" class="ufc-search-instant-search form-text" data-drupal-selector="edit-search" type="text" id="edit-search" name="search" value="" size="30" maxlength="128" />
-
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back"></div>
         </div>
-
-
-  <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions"><input data-bef-auto-submit-click="" class="js-hide button js-form-submit form-submit" data-drupal-selector="edit-submit-all-athletes" type="submit" id="edit-submit-all-athletes" value="Apply" />
-</div>
-
-
-
-
-
-</div>
-
-</form>
-
-
-  
-                      <div class="view-items-outer-wrp">
-      <div class="view-items-wrp">
-        
-        
-                                    
-        
-                
-
-  <div data-drupal-views-infinite-scroll-content-wrapper class="views-infinite-scroll-content-wrapper clearfix">
-
-<div class="item-list">
-    
-  <ul class="l-flex--4col-1to4">
-                            <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      <img src="/themes/custom/ufc/assets/img/no-profile-image.png">
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"The Assassin"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
-          Danny Abbadi
-        </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Lightweight</div>
+      </div>
+    </div>
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">2-2-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg"></div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"The Assassin"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
-          Danny Abbadi
-        </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/danny-abbadi"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
-    
-    Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-          
-        </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/2022-09/ABBASOV_NARIMAN.png?h=a30e7339&amp;itok=SoKP6s8u" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname"></span>
-        
-        <span class="c-listing-athlete__name">
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Nariman Abbassov
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Lightweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Lightweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">0-1-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">0-1-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/nariman__abbasov" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/nariman__abbasov" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2022-09/ABBASOV_NARIMAN_R.png?itok=Ipu_5wLv" width="185" height="504" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname"></span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Nariman Abbassov
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/nariman-abbassov"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/nariman-abbassov" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/nariman__abbasov" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/nariman__abbasov" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      <img src="/themes/custom/ufc/assets/img/no-profile-image.png">
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Tank"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail"></div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Tank"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Tank Abbott
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Heavyweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Heavyweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">8-10-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">8-10-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg"></div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Tank"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front"></div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg"></div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Tank"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Tank Abbott
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/tank-abbott"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/tank-abbott" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back"></div>
         </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-          
-        </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/2025-10/ABDELWAHAB_HAMDY_10-25.png?h=a30e7339&amp;itok=hW0jDE00" width="400" height="300" alt="Hamdy Abdelwahab" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"The Hammer"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"The Hammer"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Hamdy Abdelwahab
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Heavyweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Heavyweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">7-1-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">7-1-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Hamdyabdelwah" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Hamdyabdelwah" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/hamdy.abdelwahab1" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/hamdy.abdelwahab1" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2022-07/ABDELWAHAB_HAMDY_R_07-30.png?itok=XdK5gGVP" width="185" height="580" alt="Hamdy Abdelwahab" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"The Hammer"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"The Hammer"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Hamdy Abdelwahab
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/hamdy-abdelwahab"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/hamdy-abdelwahab" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Hamdyabdelwah" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/hamdy.abdelwahab1" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Hamdyabdelwah" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/hamdy.abdelwahab1" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/2026-08/ABDUL-MALIK_MANSUR_08-15.png?h=a30e7339&amp;itok=vZH0GEJR" width="400" height="300" alt="Mansur Abdul-Malik" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname"></span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Mansur Abdul-Malik
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Middleweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Middleweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">9-2-1 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">9-2-1 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Mansurabdulmal" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Mansurabdulmal" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/mansurabdulmalik" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/mansurabdulmalik" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2025-02/ABDUL-MALIK_MANSUR_L_02-22.png?itok=MDJw5ft-" width="185" height="625" alt="Mansur Abdul-Malik" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname"></span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Mansur Abdul-Malik
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/mansur-abdul-malik"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/mansur-abdul-malik" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Mansurabdulmal" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/mansurabdulmalik" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/Mansurabdulmal" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/mansurabdulmalik" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/2026-09/ABDULLAEV_AKBAR_09-15.png?h=a30e7339&amp;itok=7UImBdCp" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname"></span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Akbar Abdullaev
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Lightweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Lightweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">1-0-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">1-0-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/akbar.abdullaev.mma" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/akbar.abdullaev.mma" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2026-09/ABDULLAEV_AKBAR_R_09-15.png?itok=fpJyCKCG" width="185" height="560" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname"></span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Akbar Abdullaev
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/akbar-abdullaev"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/akbar-abdullaev" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/akbar.abdullaev.mma" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/akbar.abdullaev.mma" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/2026-06/ABDULLAYEV_TAHIR_06-27.png?h=a30e7339&amp;itok=GCRj3zxX" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Tank"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Tank"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Tahir Abdullayev
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Welterweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Welterweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">21-3-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">21-3-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/tahir__abdullayev" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/tahir__abdullayev" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2026-11/ABDULLAYEV_TAHIR_R_11-21.png?itok=NxINPxMn" width="185" height="579" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Tank"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Tank"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Tahir Abdullayev
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/tahir-abdullayev"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/tahir-abdullayev" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/tahir__abdullayev" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/tahir__abdullayev" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/2023-02/ABDURAKHIMOV_SHAMIL_02_07.png?h=a30e7339&amp;itok=Eg0gGACD" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Abrek"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Abrek"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Shamil Abdurakhimov
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Heavyweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Heavyweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">20-8-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">20-8-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/ShamilAbrek" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/ShamilAbrek" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/shamilabdurakhimov" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/shamilabdurakhimov" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2021-11/ABDURAKHIMOV_SHAMIL_R_09-25.png?itok=2gFea46c" width="185" height="536" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Abrek"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Abrek"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Shamil Abdurakhimov
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/shamil-abdurakhimov"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/shamil-abdurakhimov" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/ShamilAbrek" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/shamilabdurakhimov" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/ShamilAbrek" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/shamilabdurakhimov" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-  
-  
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/image/fighter_images/Abe_Daichi/ABE_DAICHI.png?itok=1GwxC37b" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname"></span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Daichi Abe
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Welterweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Welterweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">6-1-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">6-1-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/daichi.MMA?ref=br_rs" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Facebook</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/daichi.MMA?ref=br_rs" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Facebook</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/mma_daichi" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/mma_daichi" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/daa1127" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/daa1127" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/image/fighter_images/Abe_Daichi/ABE_DAICHI_R.png?itok=ZzvxlUwW" width="185" height="639" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname"></span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname"></span>
+            <span class="c-listing-athlete__name">
           Daichi Abe
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/daichi-abe"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/daichi-abe" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/daichi.MMA?ref=br_rs" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Facebook</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/mma_daichi" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/daa1127" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/daichi.MMA?ref=br_rs" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Facebook</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/mma_daichi" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/daa1127" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
+      </div>
     </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-  
-  
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/image/fighter_images/Papy_Abedi/PapyAbedi_Headshot.png?itok=PkMEExEe" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Makambo"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Makambo"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Papy Abedi
         </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Middleweight</div>
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Middleweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">9-3-0 (W-L-D)</span>
           </div>
-  </span>
-        
-          <span class="c-listing-athlete__record">9-3-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/Unavailable  " target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Facebook</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use></svg></span>
-                  </span></a>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/Unavailable%20%20" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Facebook</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/TeamMakambo" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/TeamMakambo" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/makamboabedi" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/makamboabedi" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
-      </div>
-
-    </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2022-03/503efe47-c6b3-4a88-9a40-d9d13de9e1f1%252FPapy-Abedi_205746_RightFullBodyImage.png?itok=DzyflPah" width="185" height="625" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"Makambo"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"Makambo"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Papy Abedi
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/papy-abedi"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/papy-abedi" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
-            <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/Unavailable  " target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Facebook</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/TeamMakambo" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Twitter</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use></svg></span>
-                    </span></a>
-                </li>
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/makamboabedi" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
-            </ul>
-          
-        </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-                                  <li class="l-flex__item">
-<div class="node node--type-athlete node--view-mode-all-athletes-result ds-1col clearfix">
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-<div class="c-listing-athlete-flipcard white">
-
-  <div class="c-listing-athlete-flipcard__inner">
-
-    <div class="c-listing-athlete-flipcard__front">
-
-            <div class="c-listing-athlete__thumbnail">      
-            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/teaser/s3/image/ufc-fighter-container/68520/profile-galery/profile-picture/ABREU_KLIDSON.png?itok=VJJ3iPu3" width="400" height="300" loading="lazy" class="image-style-teaser" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      
-  </div>
-       
-      <div class="c-listing-athlete__text">
-
-                  <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"White Bear"</div>
-  </div>
-</span>
-        
-        <span class="c-listing-athlete__name">
-          Klidson Abreu
-        </span>
-
-                  <span class="c-listing-athlete__title">
-      <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
-              <div class="field__item">Light Heavyweight</div>
-          </div>
   </span>
-        
-          <span class="c-listing-athlete__record">15-4-0 (W-L-D)</span>
-
-      </div>
-
-      <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
-                  <ul class="c-listing-athlete-flipcard__social-menu">
-                          <li class="c-listing-athlete-flipcard__social-item">
-                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/klidsonabreu" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                  </span></a>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://facebook.com/Unavailable%20%20" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Facebook</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#facebook"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
               </li>
-            
-          </ul>
-        
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://twitter.com/TeamMakambo" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Twitter</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#twitter"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/makamboabedi" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-
     </div>
-
-    <div class="c-listing-athlete-flipcard__back">
-
-            <div class="c-listing-athlete__bgimg">
-            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">  <div class="layout layout--onecol">
-    <div  class="layout__region layout__region--content">
-          <img src="https://ufc.com/images/styles/event_fight_card_upper_body_of_standing_athlete/s3/2019-02/ABREU_KLIDSON_R_0.png?itok=PUeXNFcM" width="185" height="573" loading="lazy" class="image-style-event-fight-card-upper-body-of-standing-athlete" />
-
-
-
-
-    </div>
-  </div>
-
-</div>
-      </div>
-      
-      <div class="c-listing-athlete-flipcard__text__back">
-
-              <span class="c-listing-athlete__nickname">
-<div class="field field--name-nickname field--type-string field--label-hidden">
-      <div class="field__item">"White Bear"</div>
-  </div>
-</span>
-      
-        <span class="c-listing-athlete__name">
+    <div class="c-listing-athlete-flipcard white">
+      <div class="c-listing-athlete-flipcard__inner">
+        <div class="c-listing-athlete-flipcard__front">
+          <div class="c-listing-athlete__thumbnail">
+            <div class="field field--name-image field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete__text">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"White Bear"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
           Klidson Abreu
         </span>
-
-      </div>
-
-        <div class="c-listing-athlete-flipcard__action">
-                    
-          
-
-
-
-<a
-
-        href="/athlete/klidson-abreu"
-      
-    class="e-button--black "
-
-  
-  
-  ><span class="e-button__text">
+            <span class="c-listing-athlete__title">
+              <div class="field field--name-stats-weight-class field--type-entity-reference field--label-hidden field__items">
+                <div class="field__item">Light Heavyweight</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__record">15-4-0 (W-L-D)</span>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--front">
+            <ul class="c-listing-athlete-flipcard__social-menu">
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/klidsonabreu" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="c-listing-athlete-flipcard__back">
+          <div class="c-listing-athlete__bgimg">
+            <div class="field field--name-image-body-right field--type-entity-reference field--label-hidden field__item">
+              <div class="layout layout--onecol">
+                <div class="layout__region layout__region--content"></div>
+              </div>
+            </div>
+          </div>
+          <div class="c-listing-athlete-flipcard__text__back">
+            <span class="c-listing-athlete__nickname">
+              <div class="field field--name-nickname field--type-string field--label-hidden">
+                <div class="field__item">"White Bear"</div>
+              </div>
+            </span>
+            <span class="c-listing-athlete__name">
+          Klidson Abreu
+        </span>
+          </div>
+          <div class="c-listing-athlete-flipcard__action">
+            <a href="/athlete/klidson-abreu" class="e-button--black ">
+              <span class="e-button__text">
     
     Athlete Profile
-  </span></a>
-        </div>
-
-        <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
-                      <h4>Follow</h4>
-
+  </span>
+            </a>
+          </div>
+          <div class="c-listing-athlete-flipcard__footer c-listing-athlete-flipcard__footer--back">
+            <h4>Follow</h4>
             <ul class="c-listing-athlete-flipcard__social-menu">
-                              <li class="c-listing-athlete-flipcard__social-item">
-                  <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/klidsonabreu" target="_blank" rel="noopener noreferrer"><span class="c-listing-athlete-flipcard__social-icon">
-                  
-  
-    
-  <span class="e-icon--small"><svg class="e-icon__svg"
-                ><title>Instagram</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use></svg></span>
-                    </span></a>
-                </li>
-              
+              <li class="c-listing-athlete-flipcard__social-item">
+                <a class="c-listing-athlete-flipcard__social-link" href="https://instagram.com/klidsonabreu" target="_blank" rel="noopener noreferrer">
+                  <span class="c-listing-athlete-flipcard__social-icon">
+                    <span class="e-icon--small">
+                      <svg class="e-icon__svg">
+                        <title>Instagram</title>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#instagram"></use>
+                      </svg>
+                    </span>
+                  </span>
+                </a>
+              </li>
             </ul>
-          
+          </div>
         </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-
-</div>
-
-</li>
-          
-    <li class="l-flex__item">
-      
-          <div class="freestar-slot-definition">
-      <!-- Tag ID: ufc-com_athletes_250 -->
-<div align="center" data-freestar-ad="__300x300 __250x250" id="ufc-com_athletes_250">
-  <script data-cfasync="false" type="text/javascript">
-    freestar.config.enabled_slots.push({ placementName: "ufc-com_athletes_250d", slotId: "ufc-com_athletes_250", targeting: {site: location.hostname.replace('www.','')} });
-  </script>
-</div>
-    </div>
-    
-    </li>
-
-    
-  </ul>
-
-  </div>
-<div class="view view-promos-panel-views view-id-promos_panel_views view-display-id-brand_voice js-view-dom-id-4e8f2f69bd3b1b9f770d872c771af8daf8cf23b78e2b03e0f956466ff69a5e50">
-  
-    
-      
-  
-          </div>
-</div>
-
-
-
-
-
       </div>
     </div>
-  
-  
-<ul class="js-pager__items pager" data-drupal-views-infinite-scroll-pager>
-  <li class="pager__item">
-    <a class="button" href="?page=1" title="Load more items" rel="next">Load More</a>
-  </li>
-</ul>
-
-
-  
-
-  
-</div>
-</div>
-
-
-
-
-
-  </div>
-
-
-<div class="block block-dfp block-dfp-ad03566e4a-543d-40d2-8c29-e034bdfde0ea dfp-ad-block">
-  <div class="dfp-ad__headline e-t2">
-    What's Trending Now
-  </div>
-  
-  <div class="dfp-ad__title e-tag">
-    Sponsored By
-  </div>
-  
-  <div class="dfp-ad__content">
-    
-          <div class="freestar-slot-definition">
-      <!-- Tag ID: ufc-com_athletes_bottom_banner -->
-<div align="center" data-freestar-ad="__320x50 __728x90" id="ufc-com_athletes_bottom_banner">
-  <script data-cfasync="false" type="text/javascript">
-    freestar.config.enabled_slots.push({ placementName: "ufc-com_athletes_bottom_banner", slotId: "ufc-com_athletes_bottom_banner", targeting: {site: location.hostname.replace('www.','')} });
-  </script>
-</div>
-    </div>
-    
-  </div>
-</div>
-
-<div class="views-element-container block block-views block-views-blockcontent-footer-new-block-2">
-  
-    
-      
-
-  <div><div class="view view-content-footer-new view-id-content_footer_new view-display-id-block_2 js-view-dom-id-1da4ce7551351608e69edbc4446661f2eac15a268b1ffdf2e09ee4de46dc5e1f">
-  
-    
-      
-  
-          </div>
-</div>
-
-
-
-
-
-  </div>
-</div>
-
-  <aside class="l-page_filters">
-    
-
-<div class="facet-filter-top-nav">
-  <div class="facet-filter__inner">
-    <span class="facet-tnav-label">Filter <span class="facet-tnav-label--white"> 524 Athletes </span></span>
-  </div>
-  <div class="facet-filter__close">
-    
-  
-    
-  <span class="e-icon"><svg class="e-icon__svg"
-                          aria-hidden="true"
-        ><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#close"></use></svg></span>
-  </div>
-</div>
-<div class="facets-blks-wrp">
-  <div class="filter-shade"></div>
-  <div class="sidebar-first-inner-wrp">
-      </div>
-  <div class="c-facets-abutton">
-    
-
-
-
-<a
-
-    
-    class="e-button--small "
-
-  
-  
-  ><span class="e-button__text">
-    
-    Apply
-  </span></a>
-  </div>
-</div>
-  </aside>
-
-</div>
-
-  </div>
-
-
-    </div>
-
-      </div>
-
-  </div>
-
-      </div>
-  
-</div>
-    </div>
-
-        
-    
-          <div class="l-page__footer">
-        
-
-<footer class="c-site-footer" role="contentinfo">
-  <div class="c-site-footer__main">
-    <a class="c-site-footer__logo" href="/">
-      <svg>
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#ufc-logo"></use>
-      </svg>
-    </a>
-    
-<div id="block-ufc-localization">
-  
-    
-      
-
-<div class="ufc-block-localization__title e-t6">
-  <div class="block-ufc-localization-title">UFC.COM - United States</div>
-  <svg>
-    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/themes/custom/ufc/assets/svg/sprite-ui.svg#triangle-down"></use>
-  </svg>
-
-</div>
-
-<div class="ufc-block-localization__links" aria-hidden="true">
-  <ul class="links"><li><a href="https://www.ufc.com.br">Brazil</a></li><li><a href="http://ufc.cn">China</a></li><li><a href="https://ufc.ru">Eurasia</a></li><li><a href="https://www.ufc.com/language/switch/fr">France</a></li><li><a href="http://jp.ufc.com">Japan</a></li><li><a href="https://kr.ufc.com">Korea</a></li><li><a href="https://www.ufcespanol.com">Latin America</a></li><li><a href="https://us.ufcespanol.com">USA Espanol</a></li></ul>
-</div>
-  </div>
-
-    <nav role="navigation" aria-labelledby="block-footer-menu" id="block-footer" class="c-menu-footer">
-            
-  <h2 class="u-visually--hidden" id="block-footer-menu">Footer</h2>
-
-  
-                          <ul class="c-menu-footer__menu--level-1">
-                            <li class="c-menu-footer__item--level-1">
-          <a href="/about" target="_self" class="c-menu-footer__link--level-1" data-drupal-link-system-path="node/7258">UFC</a>
-                                            <ul class="c-menu-footer__menu--level-2">
-                            <li class="c-menu-footer__item--level-2">
-          <a href="/about/sport" target="_self" class="c-menu-footer__link--level-2" data-drupal-link-system-path="node/7260">The Sport</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="/foundation" target="_self" class="c-menu-footer__link--level-2" data-drupal-link-system-path="node/134016">UFC Foundation</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://ufc.com/careers" target="_self" class="c-menu-footer__link--level-2">UFC Careers</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://wwecorp.wd5.myworkdayjobs.com/zuffaboxing" class="c-menu-footer__link--level-2">Zuffa Boxing Careers</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://ufcstore.com/en/?_s=bm-ufccom-Footer" target="_blank" class="c-menu-footer__link--level-2">Store</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://www.ufcfightclub.com" class="c-menu-footer__link--level-2">UFC Fight Club</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://imgvideoarchive.com/client/ufc?utm_source=ufc&amp;utm_medium=website&amp;utm_campaign=partner_marketing" class="c-menu-footer__link--level-2" title="License UFC Video Content">UFC Video Archive</a>
-                  </li>
-            </ul>
-      
-                  </li>
-                      <li class="c-menu-footer__item--level-1">
-          <a href="https://www.ufc.com/connect" class="c-menu-footer__link--level-1">Social Media</a>
-                                            <ul class="c-menu-footer__menu--level-2">
-                            <li class="c-menu-footer__item--level-2">
-          <a href="https://facebook.com/ufc" class="c-menu-footer__link--level-2">Facebook</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://www.instagram.com/ufc/" class="c-menu-footer__link--level-2">Instagram</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://www.threads.net/@ufc" class="c-menu-footer__link--level-2">Threads</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://whatsapp.com/channel/0029VZzIZSS2Jl8JYItVtk3S" class="c-menu-footer__link--level-2">WhatsApp</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://www.youtube.com/ufc" class="c-menu-footer__link--level-2">YouTube</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://www.tiktok.com/@ufc" class="c-menu-footer__link--level-2">TikTok</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://twitter.com/ufc" class="c-menu-footer__link--level-2">Twitter</a>
-                  </li>
-            </ul>
-      
-                  </li>
-                      <li class="c-menu-footer__item--level-1">
-          <a href="/faq" target="_self" class="c-menu-footer__link--level-1" data-drupal-link-system-path="node/90551">Help</a>
-                                            <ul class="c-menu-footer__menu--level-2">
-                            <li class="c-menu-footer__item--level-2">
-          <a href="/faq-ufctv-ufcfightpass" target="_self" class="c-menu-footer__link--level-2" data-drupal-link-system-path="node/90552">Fight Pass FAQ</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="/devices" target="_self" class="c-menu-footer__link--level-2">Devices</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://access.ufc.com/media_users/sign_in" target="_self" class="c-menu-footer__link--level-2">Press Credentials</a>
-                  </li>
-            </ul>
-      
-                  </li>
-                      <li class="c-menu-footer__item--level-1">
-          <a href="/terms" target="_self" class="c-menu-footer__link--level-1" data-drupal-link-system-path="node/524">Legal</a>
-                                            <ul class="c-menu-footer__menu--level-2">
-                            <li class="c-menu-footer__item--level-2">
-          <a href="/terms" target="_self" class="c-menu-footer__link--level-2" data-drupal-link-system-path="node/524">Terms</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="/privacy-policy" target="_self" class="c-menu-footer__link--level-2" data-drupal-link-system-path="node/525">Privacy Policy</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://optout.networkadvertising.org/?c=1" target="_self" class="c-menu-footer__link--level-2">Ad Choices</a>
-                  </li>
-                      <li class="c-menu-footer__item--level-2">
-          <a href="https://privacyportal.onetrust.com/webform/889c435d-64b4-46d8-ad05-06332fe1d097/838124dd-3118-48eb-94cf-d64c5f977730" class="c-menu-footer__link--level-2">Do Not Sell or Share</a>
-                  </li>
-            </ul>
-      
-                  </li>
-            </ul>
-      
-
-  
-</nav>
-
-  </div>
-  <div class="c-site-footer__copyright">
-    
-  </div>
-</footer>
-      </div>
-      </main>
-</div>
-
-  </div>
-
-    
-    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","pathPrefix":"","currentPath":"athletes\/all","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"ajaxPageState":{"libraries":"eJx1kFGOwyAMRC8UwpGQA05C62CETdrs6ZeSVN39qITQzMNG9kAIypAOC5cY58JJhwn83Sm3k-0f7W7y9Unx2fpQFYvDZ2bB4OZIzYqF2oqkTlv8WrJgwgI0hB3tHgPyQHBwVReieN6xHJYTeqYhM5ENpWag8aUNxXSXQQ5R3NpIgkOdvZ2qKifpeiGegIyXf_Z2ut5uQuEc-JEuJBrTYkBXQj3_2zBVs0E8KzIsJ5Y26wTFzLGIXkTRzMxtrY9fEcLlHzhpwRTEcNa4xZ_-kYMgtrRAJkjprGzZLKtmkB7gyiX-gEbuAzhiD3SB1re8uSAUv9qPHIHIXYvIsEd8iO33uHGohCdycIOnW1DtW1w8pjmmtoETX17Bd2re1Jz0F2lD4z4","theme":"ufc","theme_token":null},"ajaxTrustedUrl":{"\/athletes\/all":true},"back_to_top":{"back_to_top_button_trigger":100,"back_to_top_prevent_on_mobile":true,"back_to_top_prevent_in_admin":true,"back_to_top_button_type":"text","back_to_top_button_text":"Back to top"},"accountSettings":{"apiUrl":"https:\/\/ufc.api.onvesper.com","realm":"dce.ufc","app":"dice-id","apiKey":"39d5cb34-799c-4967-8038-fc240bf2984b","loginText":"Unlock MORE of your inner combat sports fan with UFC Fight Pass! Fighting is what we live for. And no one brings you MORE live fights, new shows, and events across multiple combat sports from around the world. With a never-ending supply of fighting in every discipline, there`s always something new to watch. Leave it to the world`s authority in MMA to bring you the Ultimate 24\/7 platform for MORE combat sports, UFC Fight Pass!","ctaText":"Continue watching","ctaLink":"\/account\/login","createAccount":"\/account\/signup","heartbeatApiUrl":"https:\/\/ufc.api.onvesper.com\/prod","hideAccountIcon":true,"hideAddressFields":false,"errorTextGeneral":"There was a problem while loading content. Please try again.","errorTextEntitlement":"Unlock MORE of your inner combat sports fan with UFC Fight Pass! Fighting is what we live for. And no one brings you MORE live fights, new shows, and events across multiple combat sports from around the world. With a never-ending supply of fighting in every discipline, there`s always something new to watch. Leave it to the world`s authority in MMA to bring you the Ultimate 24\/7 platform for MORE combat sports, UFC Fight Pass!","entitlementCtaText":"Upgrade licence","entitlementCtaLink":"\/account\/signup","settings":{"videoPreviewInfo":"videoPreviewInfo"}},"ufcLiveStatsApi":{"baseUrl":"https:\/\/d29dxerjsp82wz.cloudfront.net\/api\/v3"},"contentLocalization":"en","cacheableGlobalsTimestamp":1795430402,"breakpoints":{"ufc.images.mobile":"","ufc.images.tablet":"(min-width: 700px)","ufc.images.desktop":"(min-width: 1024px)","ufc.images.extra-large":"(min-width: 1440px)"},"views":{"ajax_path":"\/views\/ajax","ajaxViews":{"views_dom_id:05a4c791a43ba6227da5a4efb7da53b234df2e6db2f8a01e7cda2eaf3dc233ae":{"view_name":"all_athletes","view_display_id":"page_no_filters","view_args":"","view_path":"\/athletes\/all","view_base_path":null,"view_dom_id":"05a4c791a43ba6227da5a4efb7da53b234df2e6db2f8a01e7cda2eaf3dc233ae","pager_element":0}}},"viewsAjaxGet":{"all_athletes":"all_athletes"},"disableAnimationsUrlParam":"disableAnimations","disableAnimations":false,"user":{"uid":0,"permissionsHash":"2debcf4fc9b389060fb51611b5f94c566ef01446f01a2612e35e6a8f5af6a6f0"}}</script>
-<script src="/sites/default/files/js/js_YcGMgEZUeae3pRxIJepdp8qBXA7wt0l39MUShmtpEmk.js?scope=footer&amp;delta=0&amp;language=en&amp;theme=ufc&amp;include=eJx1j1GOwyAMRC8UypGQCSZxSmyEnaTb0y9KUnV_VuJj5mlkZiAlE-AfD7d45CZsQ4TxGUz6q_6PDosOEc2wBXxVUUwhU-lWPWw9oltcyf6LTMjYoAxpR79TQhm2PPq4mQnrqaciEYpbLleIn-pSk5rk4BupEU8ObC5oeLIVeXMr0JWoMF1Y-w8RmsvU1G5i6LJIL_P1M0K6_YHRGnJSJ9Vopfd5KEBS3_qMCMxXsi-aZqug5-xZGr3BSM4CQRHaOPuvfEAp4S6sw054aIAFXmFC8x9xc-JM3GsFHZuU4k_qPtRd9Bd4DKot"></script>
-<script src="https://static.addtoany.com/menu/page.js" async></script>
-<script src="/sites/default/files/js/js_JT_zvR7lbAb8qhg8Ceqvv09JZqx5gneOZnMqmQxXTEg.js?scope=footer&amp;delta=2&amp;language=en&amp;theme=ufc&amp;include=eJx1j1GOwyAMRC8UypGQCSZxSmyEnaTb0y9KUnV_VuJj5mlkZiAlE-AfD7d45CZsQ4TxGUz6q_6PDosOEc2wBXxVUUwhU-lWPWw9oltcyf6LTMjYoAxpR79TQhm2PPq4mQnrqaciEYpbLleIn-pSk5rk4BupEU8ObC5oeLIVeXMr0JWoMF1Y-w8RmsvU1G5i6LJIL_P1M0K6_YHRGnJSJ9Vopfd5KEBS3_qMCMxXsi-aZqug5-xZGr3BSM4CQRHaOPuvfEAp4S6sw054aIAFXmFC8x9xc-JM3GsFHZuU4k_qPtRd9Bd4DKot"></script>
-<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js" defer async></script>
-<script src="//www.youtube.com/iframe_api" defer async></script>
-<script src="/sites/default/files/js/js__N_FT9qzMtyr5Db9lpn45jh-Ao0TQ5ILUp_9HXZjNqk.js?scope=footer&amp;delta=5&amp;language=en&amp;theme=ufc&amp;include=eJx1j1GOwyAMRC8UypGQCSZxSmyEnaTb0y9KUnV_VuJj5mlkZiAlE-AfD7d45CZsQ4TxGUz6q_6PDosOEc2wBXxVUUwhU-lWPWw9oltcyf6LTMjYoAxpR79TQhm2PPq4mQnrqaciEYpbLleIn-pSk5rk4BupEU8ObC5oeLIVeXMr0JWoMF1Y-w8RmsvU1G5i6LJIL_P1M0K6_YHRGnJSJ9Vopfd5KEBS3_qMCMxXsi-aZqug5-xZGr3BSM4CQRHaOPuvfEAp4S6sw054aIAFXmFC8x9xc-JM3GsFHZuU4k_qPtRd9Bd4DKot"></script>
-<script src="https://c.webtrends-optimize.com/acs/accounts/621766de-7d8c-4bb7-ac4b-ef606c76cbb8/js/wt.js" defer async></script>
-<script src="/sites/default/files/js/js_hjpldCQnZ4hJccftVx-1FJ6gdhLD-9Z3xUd_fHiqRXY.js?scope=footer&amp;delta=7&amp;language=en&amp;theme=ufc&amp;include=eJx1j1GOwyAMRC8UypGQCSZxSmyEnaTb0y9KUnV_VuJj5mlkZiAlE-AfD7d45CZsQ4TxGUz6q_6PDosOEc2wBXxVUUwhU-lWPWw9oltcyf6LTMjYoAxpR79TQhm2PPq4mQnrqaciEYpbLleIn-pSk5rk4BupEU8ObC5oeLIVeXMr0JWoMF1Y-w8RmsvU1G5i6LJIL_P1M0K6_YHRGnJSJ9Vopfd5KEBS3_qMCMxXsi-aZqug5-xZGr3BSM4CQRHaOPuvfEAp4S6sw054aIAFXmFC8x9xc-JM3GsFHZuU4k_qPtRd9Bd4DKot"></script>
-
+    <ul class="js-pager__items pager" data-drupal-views-infinite-scroll-pager>
+      <li class="pager__item">
+        <a class="button" href="?page=1" title="Load more items" rel="next">Load More</a>
+      </li>
+    </ul>
   </body>
 </html>

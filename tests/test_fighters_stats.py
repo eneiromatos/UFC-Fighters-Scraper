@@ -1,8 +1,9 @@
 """Offline tests against saved UFC.com pages.
 
-If UFC changes its markup, re-download the fixtures and these tests will show
-which fields broke:
-    curl -sL -A "Mozilla/5.0" https://www.ufc.com/athlete/jon-jones -o tests/fixtures/jon-jones.html
+The fixtures are real UFC.com pages trimmed to the parts the spider reads.
+If UFC changes its markup, re-download them and these tests will show which
+fields broke:
+    python tests/update_fixtures.py
 """
 from pathlib import Path
 
