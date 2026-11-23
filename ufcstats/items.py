@@ -1,11 +1,14 @@
-from __future__ import division
 import re
-from scrapy import Item, Field
+
 from itemloaders import ItemLoader
-from itemloaders.processors import TakeFirst, Compose
+from itemloaders.processors import Compose, MapCompose, TakeFirst
+from scrapy import Field, Item
 
 
-class PecordsItem(Item):
+class RecordsItem(Item):
+    wins = Field()
+    losses = Field()
+    draws = Field()
     fight_win_streak = Field()
     wins_by_knockout = Field()
     wins_by_submission = Field()
@@ -14,7 +17,7 @@ class PecordsItem(Item):
     title_defenses = Field()
 
 
-class WinWayItem(Item):
+class WinByMethodItem(Item):
     ko_tko = Field()
     dec = Field()
     sub = Field()
@@ -26,7 +29,7 @@ class StrTargetItem(Item):
     leg = Field()
 
 
-class StrPossitionItem(Item):
+class StrPositionItem(Item):
     standing = Field()
     clinch = Field()
     ground = Field()
@@ -51,12 +54,12 @@ class StrikingStatsItem(Item):
 
 
 class MainFighterStatsItem(Item):
-    knockdown_ratio = Field()
+    knockdown_avg = Field()
     avg_fight_time = Field()
     sig_strikes_defense = Field()
     takedown_defense = Field()
-    win_by_way = Field()
-    strinking_stats = Field()
+    win_by_method = Field()
+    striking_stats = Field()
     grappling_stats = Field()
 
 
@@ -66,7 +69,7 @@ class FighterBioItem(Item):
     nick_name = Field()
     status = Field()
     division = Field()
-    hometown = Field()
+    place_of_birth = Field()
     trains_at = Field()
     fighting_style = Field()
     age = Field()
@@ -79,63 +82,74 @@ class FighterBioItem(Item):
     fighter_stats = Field()
 
 
-def clean_text(text: str):
-    text = text.strip().replace('"', "")
-    text = re.sub(r"\n *", " ", text)
-    return text
+def clean_text(text):
+    """Collapse whitespace and drop the quotes UFC wraps nicknames in."""
+    text = re.sub(r"\s+", " ", text).strip()
+    return text.strip('"').strip()
 
 
-def clean_parenthesis(text: str):
-    text = re.sub(r" \(\d*%\)| \(\d* %\)", "", text)
-    return text
+def clean_parenthesis(text):
+    """'89 (49%)' -> '89'"""
+    return re.sub(r"\s*\(\s*\d*\s*%\s*\)", "", text).strip()
 
 
-def clean_division(text: str):
-    text = text.replace(" \u2022 ", ": ")
-    return text
+def clean_division(text):
+    """'Middleweight Division' -> 'Middleweight'"""
+    return re.sub(r"\s+Division$", "", text)
+
+
+def clean_percent(text):
+    return text.rstrip("%").strip()
+
+
+def drop_empty(text):
+    return text or None
 
 
 class FighterItemLoader(ItemLoader):
-    default_output_processor = Compose(TakeFirst(), clean_text)
+    default_input_processor = MapCompose(clean_text, drop_empty)
+    default_output_processor = TakeFirst()
 
 
 class FighterBioItemLoader(FighterItemLoader):
     default_item_class = FighterBioItem
-    records_out = TakeFirst()
-    fighter_stats_out = TakeFirst()
-    division_out = Compose(TakeFirst(), clean_text, clean_division)
+    division_in = MapCompose(clean_text, clean_division, drop_empty)
+    records_in = MapCompose()
+    fighter_stats_in = MapCompose()
 
 
 class MainFighterStatsItemLoader(FighterItemLoader):
     default_item_class = MainFighterStatsItem
-    strinking_stats_out = TakeFirst()
-    grappling_stats_out = TakeFirst()
-    win_by_way_out = TakeFirst()
+    striking_stats_in = MapCompose()
+    grappling_stats_in = MapCompose()
+    win_by_method_in = MapCompose()
 
 
 class StrikingStatsItemLoader(FighterItemLoader):
     default_item_class = StrikingStatsItem
-    sig_str_by_position_out = TakeFirst()
-    sig_str_by_target_out = TakeFirst()
+    accuracy_in = MapCompose(clean_text, clean_percent, drop_empty)
+    sig_str_by_position_in = MapCompose()
+    sig_str_by_target_in = MapCompose()
 
 
 class GrapplingStatsItemLoader(FighterItemLoader):
     default_item_class = GrapplingStatsItem
+    accuracy_in = MapCompose(clean_text, clean_percent, drop_empty)
 
 
-class StrPossitionItemLoader(FighterItemLoader):
-    default_output_processor = Compose(TakeFirst(), clean_text, clean_parenthesis)
-    default_item_class = StrPossitionItem
+class StrPositionItemLoader(FighterItemLoader):
+    default_item_class = StrPositionItem
+    default_input_processor = MapCompose(clean_text, clean_parenthesis, drop_empty)
 
 
 class StrTargetItemLoader(FighterItemLoader):
     default_item_class = StrTargetItem
 
 
-class WinWayItemLoader(FighterItemLoader):
-    default_item_class = WinWayItem
-    default_output_processor = Compose(TakeFirst(), clean_text, clean_parenthesis)
+class WinByMethodItemLoader(FighterItemLoader):
+    default_item_class = WinByMethodItem
+    default_input_processor = MapCompose(clean_text, clean_parenthesis, drop_empty)
 
 
 class RecordsItemLoader(FighterItemLoader):
-    default_item_class = PecordsItem
+    default_item_class = RecordsItem
