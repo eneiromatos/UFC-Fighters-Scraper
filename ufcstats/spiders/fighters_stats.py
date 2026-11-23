@@ -35,7 +35,7 @@ COMPARE_FIELDS = {
     "Sig. Str. Defense": ("main", "sig_strikes_defense"),
     "Takedown Defense": ("main", "takedown_defense"),
     "Knockdown Avg": ("main", "knockdown_avg"),
-    "Average fight time": ("main", "avg_fight_time"),
+    "Average fight time": ("main", "avg_fight_time_seconds"),
 }
 
 OVERLAP_FIELDS = {
@@ -151,9 +151,19 @@ class FightersStatsSpider(scrapy.Spider):
         )
         striking.add_value("sig_str_by_target", self.parse_str_target(response))
 
+        striking_stats = dict(striking.load_item())
+        grappling_stats = dict(loaders["grappling"].load_item())
+        for stats, landed in (
+            (striking_stats, "sig_strikes_landed"),
+            (grappling_stats, "takedowns_landed"),
+        ):
+            # UFC leaves "landed" blank instead of showing 0 (accuracy is 0%).
+            if landed not in stats and stats.get("accuracy") == 0:
+                stats[landed] = 0
+
         main = loaders["main"]
-        main.add_value("striking_stats", dict(striking.load_item()))
-        main.add_value("grappling_stats", dict(loaders["grappling"].load_item()))
+        main.add_value("striking_stats", striking_stats)
+        main.add_value("grappling_stats", grappling_stats)
         main.add_value(
             "win_by_method",
             self.parse_3bar(

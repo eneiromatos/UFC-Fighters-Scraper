@@ -62,9 +62,14 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'ufcstats.pipelines.UfcstatsPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'ufcstats.pipelines.FieldCoveragePipeline': 300,
+}
+
+# Write CSV feeds with one column per stat (see ufcstats/exporters.py)
+FEED_EXPORTERS = {
+    'csv': 'ufcstats.exporters.FlatCsvItemExporter',
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -81,8 +86,11 @@ ROBOTSTXT_OBEY = False
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+# Turn on per run with: scrapy crawl fighters_stats -s HTTPCACHE_ENABLED=true ...
+# Pages are saved under .scrapy/httpcache; delete that folder to fetch fresh ones.
 #HTTPCACHE_ENABLED = True
 #HTTPCACHE_EXPIRATION_SECS = 0
 #HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_IGNORE_HTTP_CODES = []
+# Never cache errors or rate-limit responses
+HTTPCACHE_IGNORE_HTTP_CODES = [403, 429, 500, 502, 503, 504]
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
